@@ -13,5 +13,10 @@ after_success:
     - docker build -t iulianlaz/nginx ./nginx
     - docker build -t iulianlaz/server ./server
     - docker build -t iulianlaz/worker ./worker
-
+    # Log in to docker cli
+    - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
     # Take those images and push them to docker hub
+    - docker push iulianlaz/client
+    - docker push iulianlaz/nginx
+    - docker push iulianlaz/server
+    - docker push iulianlaz/worker
