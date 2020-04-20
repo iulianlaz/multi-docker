@@ -1,0 +1,17 @@
+sudo: required
+services:
+    - docker
+
+before_install:
+    - docker build -t iulianlaz/react-test ./client/Dockerfile.dev ./client
+
+script:
+    - docker run iulianlaz/react-test npm test -- --coverage
+
+after_success:
+    - docker build -t iulianlaz/client ./client
+    - docker build -t iulianlaz/nginx ./nginx
+    - docker build -t iulianlaz/server ./server
+    - docker build -t iulianlaz/worker ./worker
+
+    # Take those images and push them to docker hub
